@@ -1,0 +1,5 @@
+merchant_sku,title,brand,category_path,old_description,image_urls
+SKU123,Siyah Spor Tayt,XMarka,Giyim > Spor > Tayt,Mevcut ürün açıklaması buraya yazılır,https://site/img1.jpg|https://site/img2.jpg
+merchant_sku,title,brand,category_path,old_description,image_urls
+SKU123,Siyah Spor Tayt,XMarka,Giyim > Spor > Tayt,Mevcut ürün açıklaması buraya yazılır,https://site/img1.jpg|https://site/img2.jpg
+SKU124,Beyaz Oversize Tişört,YMarka,Giyim > Üst Giyim > Tişört,Eski açıklama: pamuklu kumaş,https://site/imgA.jpg|https://site/imgB.jpg
