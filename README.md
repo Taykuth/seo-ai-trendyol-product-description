@@ -47,6 +47,14 @@ data/
 ---
 
 ## Kurulum
+## Projeyi Çalıştırma (Özet)
+
+1. Python 3.10+ kurulu olmalı
+2. `pip install -r requirements.txt`
+3. `.env.example` → `.env`
+4. API anahtarlarını gir
+5. `python main_fetch_products.py`
+6. Çıktılar `outputs/` klasöründe oluşur
 
 ```powershell
 python -m venv venv
