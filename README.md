@@ -1,85 +1,56 @@
-# Trendyol için Yapay Zeka Tabanlı SEO Uyumlu Ürün Açıklaması Üretim Sistemi
+# Trendyol SEO AI — LLM-Powered Product Description Generator
 
-Bu proje, Trendyol Seller API üzerinden bir markaya ait ürün verilerini çekerek, büyük dil modelleri (LLM) kullanımıyla SEO uyumlu ve platform kurallarına uygun yeni ürün açıklamaları üreten uçtan uca bir otomasyon sistemidir. Proje, bitirme projesi kapsamında akademik ve mühendislik odaklı olarak geliştirilmiştir.
+An end-to-end automation pipeline that fetches product data from the Trendyol Seller API and generates SEO-optimized, platform-compliant product descriptions using Large Language Models.
 
-## Projenin Amacı
+## Problem
 
-E-ticaret platformlarında ürün açıklamaları çoğu zaman SEO açısından yetersiz, tekrarlı ve manuel olarak üretildiği için zaman alıcıdır. Bu çalışmanın amacı; Trendyol’daki mevcut ürün açıklamalarını otomatik olarak analiz etmek, yapay zeka yardımıyla SEO uyumlu yeni açıklamalar üretmek ve eski–yeni açıklamaları karşılaştırmalı şekilde sunmaktır.
+Manual product description writing does not scale for large catalogs. Uncontrolled AI output can violate platform rules. Direct automated publishing carries operational risk.
 
-## Problem Tanımı
+## Solution
 
-Büyük ürün kataloglarında manuel açıklama üretimi ölçeklenebilir değildir. Yapay zeka çıktıları kontrolsüz bırakıldığında platform kurallarına aykırı içerikler oluşabilir. Ayrıca canlı sistemlere doğrudan otomatik yazım operasyonel riskler taşır. Bu proje, bu problemlere kontrollü, denetlenebilir ve güvenli bir çözüm sunar.
+A controlled, auditable pipeline with human approval before any content goes live.
 
-## Önerilen Çözüm
+## Pipeline
+Trendyol Seller API → Fetch Products → Normalize → Rule-Based Filter → LLM (OpenAI) → SEO Description → Excel Report
 
-Geliştirilen sistem aşağıdaki adımlardan oluşan bir veri işleme hattı (pipeline) sunar:
-1. Trendyol Seller API üzerinden ürün verilerinin çekilmesi  
-2. Ürün bilgilerinin normalize edilmesi  
-3. Kural tabanlı filtreleme (yasaklı kelimeler, iddialı ifadeler, uzunluk sınırları)  
-4. Büyük dil modeli (OpenAI) ile SEO uyumlu açıklama üretimi  
-5. Rate limit ve hata yönetimi (retry mekanizması)  
-6. Eski ve yeni açıklamaların Excel formatında raporlanması  
+## Features
 
-## Sistem Mimarisi
+- Fetches live product data via Trendyol Seller API
+- Rule-based filtering: prohibited terms, length limits, exaggerated claims
+- LLM-generated SEO-optimized descriptions
+- Retry mechanism and rate limit handling
+- Excel output comparing old vs. new descriptions
+- Human approval required before publishing — safe by design
 
-Trendyol Seller API → Ürün Verisi → Normalizasyon → Kural Tabanlı Filtreleme → Yapay Zeka (LLM) → SEO Uyumlu Açıklama → Excel Çıktı
+## Stack
 
-## Proje Yapısı
+Python · OpenAI API · Trendyol Seller API · Pandas · OpenPyXL
 
-SEO-based-product-description/  
-├── config/ (API ve yapılandırma dosyaları)  
-├── services/ (Trendyol API ve AI servisleri)  
-├── outputs/ (Üretilen Excel çıktıları)  
-├── .env.example (Ortam değişkenleri örneği)  
-├── main_fetch_products.py (Ana çalıştırma dosyası)  
-├── requirements.txt (Gerekli Python paketleri)  
-└── README.md  
+## Setup
 
-## Kurulum
+1. Clone the repo
+2. Install dependencies:
+```bash
+   pip install -r requirements.txt
+```
+3. Copy `.env.example` to `.env` and fill in:
+   TRENDYOL_API_KEY=...
+  TRENDYOL_API_SECRET=...
+  TRENDYOL_SUPPLIER_ID=...
+  OPENAI_API_KEY=...
 
-Ön koşul olarak Python 3.10 veya üzeri gereklidir.
+4. Run:
+```bash
+   python main_fetch_products.py
+```
 
-Gerekli paketlerin kurulması:
-pip install -r requirements.txt
+## Output
 
-Ortam değişkenlerinin ayarlanması için `.env.example` dosyası kopyalanarak `.env` olarak adlandırılır ve aşağıdaki bilgiler girilir:
+| File | Content |
+|------|---------|
+| `products_raw.xlsx` | Original descriptions from Trendyol |
+| `products_with_ai.xlsx` | Original + AI-generated descriptions + status (OK/FAIL) |
 
-TRENDYOL_API_KEY=...  
-TRENDYOL_API_SECRET=...  
-TRENDYOL_SUPPLIER_ID=...  
+## Design Decisions
 
-OPENAI_API_KEY=...
-
-## Projenin Çalıştırılması
-
-python main_fetch_products.py
-
-## Üretilen Çıktılar
-
-Çalıştırma sonrası `outputs/` klasörü altında iki temel çıktı üretilir:
-
-products_raw.xlsx  
-→ Trendyol’dan çekilen orijinal ürün açıklamaları
-
-products_with_ai.xlsx  
-→ Orijinal açıklamalar  
-→ Yapay zeka ile üretilmiş yeni açıklamalar  
-→ ai_status bilgisi (OK / FAIL)
-
-Bu yapı sayesinde eski ve yeni açıklamalar doğrudan karşılaştırılabilir.
-
-## Bilinçli Tasarım Kararları
-
-Yapay zeka ile üretilen açıklamalar Trendyol’a otomatik olarak yazılmamaktadır. Üretilen içerikler insan onayına sunulmak üzere raporlanmaktadır. Bu tercih, platform kurallarına uyum ve operasyonel risklerin önlenmesi amacıyla bilinçli olarak yapılmıştır.
-
-## Kullanılan Teknolojiler
-
-Python  
-Trendyol Seller API  
-OpenAI API (Büyük Dil Modeli)  
-Pandas  
-Excel (OpenPyXL)
-
-## Sonuç
-
-Bu proje ile gerçek bir e-ticaret problemi ele alınmış, yapay zeka kontrollü ve denetlenebilir biçimde kullanılmış ve ölçeklenebilir bir ürün açıklaması üretim sistemi geliştirilmiştir. Sistem, üretime hazır veri üretmekte ve gerçek dünya senaryolarına uygun bir mimari sunmaktadır.
+AI-generated descriptions are **not** automatically published to Trendyol. All output is reviewed by a human before going live. This is intentional — to ensure platform compliance and eliminate operational risk.
