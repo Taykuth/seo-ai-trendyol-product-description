@@ -1,7 +1,11 @@
 .env
 venv/
+.venv/
 __pycache__/
 *.db
 *.sqlite3
-.env
 seo_gen.db
+
+# Generated files contain real catalog data; keep them out of git
+outputs/*
+!outputs/.gitkeep
