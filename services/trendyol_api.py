@@ -1,9 +1,10 @@
 import requests
 from requests.auth import HTTPBasicAuth
-from config.trendyol_config import API_KEY, API_SECRET, SUPPLIER_ID, BASE_URL
+from config.trendyol_config import API_KEY, API_SECRET, SUPPLIER_ID, BASE_URL, require_credentials
 
 
 def fetch_all_products():
+    require_credentials()
     all_products = []
     page = 0
     size = 50
@@ -26,7 +27,8 @@ def fetch_all_products():
             url,
             auth=HTTPBasicAuth(API_KEY, API_SECRET),
             headers=headers,
-            params=params
+            params=params,
+            timeout=30,
         )
 
         if response.status_code != 200:
