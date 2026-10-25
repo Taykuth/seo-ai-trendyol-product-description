@@ -7,7 +7,7 @@ Built during my LLM automation internship at [Skywalker.tc](https://skywalker.tc
 ## Pipeline
 
 ```mermaid
-flowchart LR
+flowchart TD
     A[Trendyol Seller API] --> B[Fetch + normalize<br/>main_fetch_products.py]
     B --> C[products_raw.xlsx]
     C --> D[OpenAI gpt-4.1-mini<br/>generate_descriptions.py]
